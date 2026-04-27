@@ -1,0 +1,37 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="13.0.1" />
+    <PackageReference Include="BCrypt.Net-Next" Version="4.0.3" />
+    <PackageReference Include="FluentValidation" Version="11.11.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Abstractions" Version="2.3.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.3.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.12" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="8.0.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\DcodePe.Catering.Common\DcodePe.Catering.Common.csproj" />
+    <ProjectReference Include="..\DcodePe.Catering.Domain\DcodePe.Catering.Domain.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="DataBase\Paquete\Commands\Delete\" />
+    <Folder Include="DataBase\Paquete\Commands\Update\" />
+    <Folder Include="DataBase\PaqueteProducto\Commands\Delete\" />
+    <Folder Include="DataBase\PaqueteProducto\Commands\Update\" />
+    <Folder Include="DataBase\TemplateFolder - Copia - Copia\Commands\Create\" />
+    <Folder Include="DataBase\TemplateFolder - Copia - Copia\Commands\Delete\" />
+    <Folder Include="DataBase\TemplateFolder - Copia - Copia\Commands\Update\" />
+    <Folder Include="DataBase\TemplateFolder - Copia - Copia\Queries\GetAll\" />
+    <Folder Include="DataBase\PaqueteServicio\Commands\Delete\" />
+    <Folder Include="DataBase\PaqueteServicio\Commands\Update\" />
+  </ItemGroup>
+
+</Project>

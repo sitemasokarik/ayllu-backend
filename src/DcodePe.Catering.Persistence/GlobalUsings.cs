@@ -1,0 +1,10 @@
+﻿global using DcodePe.Catering.Application.Database;
+global using DcodePe.Catering.Domain.Entities.Booking;
+global using DcodePe.Catering.Domain.Entities.Customer;
+global using DcodePe.Catering.Domain.Entities.User;
+global using DcodePe.Catering.Persistence.Configuration;
+global using DcodePe.Catering.Persistence.DataBase;
+global using Microsoft.EntityFrameworkCore;
+global using Microsoft.EntityFrameworkCore.Metadata.Builders;
+global using Microsoft.Extensions.Configuration;
+global using Microsoft.Extensions.DependencyInjection;

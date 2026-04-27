@@ -1,0 +1,15 @@
+namespace DcodePe.Catering.Application.DataBase.Pagina.Queries.GetAll
+{
+    public class GetAllPaginaModel
+    {
+        public int PaginaID { get; set; }
+        public string Nombre { get; set; }
+        public string Descripcion { get; set; }
+        public string Url { get; set; }
+        public string Icono { get; set; }
+        public int TotalPermisos { get; set; }
+        public DateTime? FechaCreacion { get; set; }
+        public string UsuarioCreacion { get; set; }
+        public bool? Estado { get; set; }
+    }
+}
