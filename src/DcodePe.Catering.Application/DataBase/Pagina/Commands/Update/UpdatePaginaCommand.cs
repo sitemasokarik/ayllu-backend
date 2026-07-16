@@ -17,19 +17,21 @@ namespace DcodePe.Catering.Application.DataBase.Pagina.Commands.Update
             if (entity == null)
                 return false;
 
-            // Validar nombre único (excepto el actual)
+            // Validar nombre ï¿½nico (excepto el actual)
             var existePagina = await _databaseService.Pagina
                 .AnyAsync(p => p.Nombre == model.Nombre &&
                               p.PaginaID != model.PaginaID &&
                               p.Estado == true);
 
             if (existePagina)
-                throw new InvalidOperationException($"Ya existe otra página con el nombre '{model.Nombre}'");
+                throw new InvalidOperationException($"Ya existe otra pï¿½gina con el nombre '{model.Nombre}'");
 
             entity.Nombre = model.Nombre;
             entity.Descripcion = model.Descripcion;
             entity.Url = model.Url;
             entity.Icono = model.Icono;
+            entity.GrupoMenu = model.GrupoMenu;
+            entity.OrdenMenu = model.OrdenMenu;
             entity.UsuarioModificacion = model.UsuarioModificacion;
             entity.FechaModificacion = DateTime.Now;
 

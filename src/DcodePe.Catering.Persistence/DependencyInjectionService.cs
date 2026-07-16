@@ -1,16 +1,34 @@
-﻿namespace DcodePe.Catering.Persistence
+namespace DcodePe.Catering.Persistence
 {
     public static class DependencyInjectionService
     {
         public static IServiceCollection AddPersistence(this IServiceCollection services,
             IConfiguration configuration)
         {
+            var useSqlite = configuration.GetValue<bool>("Database:UseSqlite");
+            DataBaseService.UseSqliteProvider = useSqlite;
 
-            // Configura el DbContext
             services.AddDbContext<DataBaseService>(options =>
-                options.UseSqlServer(configuration.GetConnectionString("SQLConnectionString")));
+            {
+                if (useSqlite)
+                {
+                    var sqlitePath = configuration["Database:SqlitePath"] ?? "Data/ayllu-dev.db";
+                    var fullPath = Path.IsPathRooted(sqlitePath)
+                        ? sqlitePath
+                        : Path.Combine(AppContext.BaseDirectory, sqlitePath);
 
-            // Registra la interfaz y la implementación                      
+                    var directory = Path.GetDirectoryName(fullPath);
+                    if (!string.IsNullOrEmpty(directory))
+                        Directory.CreateDirectory(directory);
+
+                    options.UseSqlite($"Data Source={fullPath}");
+                }
+                else
+                {
+                    options.UseSqlServer(configuration.GetConnectionString("SQLConnectionString"));
+                }
+            });
+
             services.AddScoped<IDataBaseService, DataBaseService>();
 
             //if (Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "local")

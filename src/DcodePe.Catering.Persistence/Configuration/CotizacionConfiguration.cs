@@ -12,7 +12,7 @@ namespace DcodePe.Catering.Persistence.Configuration
 
             entityBuilder.ToTable("Cotizacion");
             
-            // Configuración de propiedades decimales con nomenclatura actualizada
+            // ConfiguraciÃ³n de propiedades decimales con nomenclatura actualizada
             entityBuilder.Property(e => e.CostoDePersonal)
                 .HasColumnType("decimal(10, 2)");
             
@@ -43,11 +43,19 @@ namespace DcodePe.Catering.Persistence.Configuration
             entityBuilder.Property(e => e.EstadoCotizacion)
                 .IsRequired()
                 .HasMaxLength(50);
+
+            entityBuilder.Property(e => e.OrigenCotizacion)
+                .IsRequired()
+                .HasMaxLength(30)
+                .HasDefaultValue("Admin");
             
             entityBuilder.Property(e => e.FechaTentativa)
                 .HasColumnType("datetime");
             
             entityBuilder.Property(e => e.FechaTentativaOpcional)
+                .HasColumnType("datetime");
+
+            entityBuilder.Property(e => e.FechaReservada)
                 .HasColumnType("datetime");
             
             entityBuilder.Property(e => e.FechaContacto)
@@ -55,6 +63,18 @@ namespace DcodePe.Catering.Persistence.Configuration
             
             entityBuilder.Property(e => e.Observacion)
                 .HasMaxLength(1000);
+
+            entityBuilder.Property(e => e.BorradorJson)
+                .HasColumnType("nvarchar(max)");
+
+            entityBuilder.Property(e => e.CreadoPorNombre)
+                .HasMaxLength(100);
+
+            entityBuilder.Property(e => e.ResponsableNombre)
+                .HasMaxLength(100);
+
+            entityBuilder.Property(e => e.FechaAsignacion)
+                .HasColumnType("datetime");
             
             entityBuilder.Property(e => e.FechaCreacion)
                 .HasDefaultValueSql("(getdate())")

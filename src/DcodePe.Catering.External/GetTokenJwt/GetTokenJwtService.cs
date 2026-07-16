@@ -9,7 +9,7 @@
 
         }
 
-        public string Execute(string id)
+        public string Execute(string id, string userType = "admin")
         {
            var tokenHandler = new JwtSecurityTokenHandler();
             var key = _configuration["Jwt:SecretKeyJwt"] ?? string.Empty;
@@ -18,7 +18,8 @@
             {
                 Subject = new ClaimsIdentity(new Claim[]
                 {
-                    new Claim(ClaimTypes.NameIdentifier, id)
+                    new Claim(ClaimTypes.NameIdentifier, id),
+                    new Claim("user_type", userType)
                 }),
                 Expires = DateTime.UtcNow.AddDays(1),
                 SigningCredentials = new SigningCredentials(singiKey, SecurityAlgorithms.HmacSha256Signature),

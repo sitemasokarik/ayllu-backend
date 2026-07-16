@@ -1,8 +1,11 @@
-﻿//#if DEBUG //Solo disponible en DESARROLLO
+using DcodePe.Catering.Application.DataBase.Cotizacion.Commands.Claim;
 using DcodePe.Catering.Application.DataBase.Cotizacion.Commands.Create;
 using DcodePe.Catering.Application.DataBase.Cotizacion.Commands.Delete;
 using DcodePe.Catering.Application.DataBase.Cotizacion.Commands.Update;
 using DcodePe.Catering.Application.DataBase.Cotizacion.Queries.GetAllCotizacion;
+using DcodePe.Catering.Application.DataBase.Cotizacion.Queries.GetCotizacionFacturacion;
+using DcodePe.Catering.Application.Database;
+using Microsoft.EntityFrameworkCore;
 
 namespace DcodePe.Catering.Api.Controllers
 {
@@ -86,6 +89,49 @@ namespace DcodePe.Catering.Api.Controllers
                 ResponseApiService.Response(StatusCodes.Status200OK, data, "Consulta exitosa"));
         }
 
+        [HttpGet("count/recientes")]
+        public async Task<IActionResult> CountRecientes(
+            [FromServices] IDataBaseService db,
+            [FromQuery] DateTime? vistoDesde = null)
+        {
+            var desde = DateTime.Now.AddHours(-48);
+            var query = db.Cotizacion.Where(c =>
+                c.Estado == true
+                && c.EstadoCotizacion == "Activo"
+                && c.FechaCreacion >= desde);
+
+            if (vistoDesde.HasValue)
+                query = query.Where(c => c.FechaCreacion > vistoDesde.Value);
+
+            var count = await query.CountAsync();
+
+            return Ok(ResponseApiService.Response(StatusCodes.Status200OK, new { count }, "Consulta exitosa"));
+        }
+
+        [HttpPost("{id}/tomar")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> Tomar(
+            int id,
+            [FromServices] IClaimCotizacionCommand claimCotizacionCommand,
+            [FromQuery] int usuarioId,
+            [FromQuery] string usuarioNombre = "")
+        {
+            if (usuarioId <= 0)
+                return BadRequest(ResponseApiService.Response(StatusCodes.Status400BadRequest, null, "usuarioId requerido"));
+
+            var result = await claimCotizacionCommand.Execute(id, usuarioId, usuarioNombre);
+
+            if (!result.Success && result.Message == "Cotización no encontrada.")
+                return NotFound(ResponseApiService.Response(StatusCodes.Status404NotFound, null, result.Message));
+
+            if (!result.Success)
+                return BadRequest(ResponseApiService.Response(StatusCodes.Status400BadRequest, result, result.Message));
+
+            return Ok(ResponseApiService.Response(StatusCodes.Status200OK, result, result.Message));
+        }
+
         [HttpGet("getbyid/{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -101,6 +147,29 @@ namespace DcodePe.Catering.Api.Controllers
 
             return StatusCode(StatusCodes.Status200OK,
                 ResponseApiService.Response(StatusCodes.Status200OK, data, "Consulta exitosa"));
+        }
+
+        [HttpGet("{id}/facturacion")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> GetFacturacion(
+            int id,
+            [FromServices] IGetCotizacionFacturacionQuery query)
+        {
+            try
+            {
+                var data = await query.Execute(id);
+                return Ok(ResponseApiService.Response(StatusCodes.Status200OK, data, "Consulta exitosa"));
+            }
+            catch (InvalidOperationException ex)
+            {
+                return BadRequest(ResponseApiService.Response(StatusCodes.Status400BadRequest, null, ex.Message));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError,
+                    ResponseApiService.Response(StatusCodes.Status500InternalServerError, null, ex.Message));
+            }
         }
     }
 }

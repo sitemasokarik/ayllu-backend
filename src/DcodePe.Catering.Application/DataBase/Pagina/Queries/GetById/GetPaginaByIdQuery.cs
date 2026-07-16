@@ -20,6 +20,8 @@ namespace DcodePe.Catering.Application.DataBase.Pagina.Queries.GetById
                     Descripcion = p.Descripcion,
                     Url = p.Url,
                     Icono = p.Icono,
+                    GrupoMenu = p.GrupoMenu,
+                    OrdenMenu = p.OrdenMenu,
                     FechaCreacion = p.FechaCreacion,
                     UsuarioCreacion = p.UsuarioCreacion,
                     Estado = p.Estado

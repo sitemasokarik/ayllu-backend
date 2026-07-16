@@ -1,4 +1,5 @@
 using System;
+using DcodePe.Catering.Application.DataBase.Empresa.Helpers;
 
 namespace DcodePe.Catering.Application.DataBase.Empresa.Queries.GetAllEmpresa
 {
@@ -21,6 +22,27 @@ namespace DcodePe.Catering.Application.DataBase.Empresa.Queries.GetAllEmpresa
         public string Twitter { get; set; }
         public string HorarioAtencion { get; set; }
         public string Logo { get; set; }
+        public string? BancoNombre { get; set; }
+        public string? NumeroCuenta { get; set; }
+        public string? Cci { get; set; }
+        public string? YapeNumero { get; set; }
+        public string? PlinNumero { get; set; }
+        public string? QrPagoUrl { get; set; }
+        public string? InstruccionesPago { get; set; }
+        public string? CuentasPagoJson { get; set; }
+        public decimal? MontoAdelantoReserva { get; set; }
+        public bool? GeneraFactElect { get; set; }
+        public string? Ubigeo { get; set; }
+        public string? RutaCertificadoServidor { get; set; }
+        public string? CertificadoFileName { get; set; }
+        public bool TieneCertificado { get; set; }
+        public bool TieneClaveCertificado { get; set; }
+        public string? UsuarioSol { get; set; }
+        public bool TieneClaveSol { get; set; }
+        public string? SunatModo { get; set; }
+        public string? SunatWsProduccion { get; set; }
+        public bool TieneApiPeruDevToken { get; set; }
+        public List<EmpresaCuentaPagoItem> CuentasPago { get; set; } = [];
         public string UsuarioCreacion { get; set; }
         public DateTime? FechaCreacion { get; set; }
         public string UsuarioModificacion { get; set; }

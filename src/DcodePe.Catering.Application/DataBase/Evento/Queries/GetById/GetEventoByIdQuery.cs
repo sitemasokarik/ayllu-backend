@@ -20,14 +20,17 @@ namespace DcodePe.Catering.Application.DataBase.Evento.Queries.GetById
                     EventoID = e.EventoID,
                     Nombre = e.Nombre,
                     Descripcion = e.Descripcion,
-                    Fotos = e.Fotos,
+                    FotosUrls = string.IsNullOrEmpty(e.Fotos)
+                        ? new List<string>()
+                        : e.Fotos.Split(';', StringSplitOptions.RemoveEmptyEntries).ToList(),
                     EstadoEvento = e.EstadoEvento,
                     TotalCotizaciones = e.Cotizaciones.Count(c => c.Estado == true),
                     UsuarioCreacion = e.UsuarioCreacion,
                     FechaCreacion = e.FechaCreacion,
                     UsuarioModificacion = e.UsuarioModificacion,
                     FechaModificacion = e.FechaModificacion,
-                    Estado = e.Estado
+                    Estado = e.Estado,
+                    TarifasInvitadoJson = e.TarifasInvitadoJson
                 })
                 .FirstOrDefaultAsync();
 

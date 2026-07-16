@@ -15,7 +15,9 @@ namespace DcodePe.Catering.Application.DataBase.Pagina.Queries.GetAll
         {
             var paginas = await _databaseService.Pagina
                 .Where(p => p.Estado == true)
-                .OrderBy(p => p.Nombre)
+                .OrderBy(p => p.GrupoMenu)
+                .ThenBy(p => p.OrdenMenu ?? 999)
+                .ThenBy(p => p.Nombre)
                 .Select(p => new GetAllPaginaModel
                 {
                     PaginaID = p.PaginaID,
@@ -23,6 +25,8 @@ namespace DcodePe.Catering.Application.DataBase.Pagina.Queries.GetAll
                     Descripcion = p.Descripcion,
                     Url = p.Url,
                     Icono = p.Icono,
+                    GrupoMenu = p.GrupoMenu,
+                    OrdenMenu = p.OrdenMenu,
                     TotalPermisos = p.Permiso.Count(per => per.Estado == true),
                     FechaCreacion = p.FechaCreacion,
                     UsuarioCreacion = p.UsuarioCreacion,

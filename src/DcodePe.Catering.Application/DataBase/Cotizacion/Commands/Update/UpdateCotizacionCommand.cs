@@ -45,50 +45,73 @@ namespace DcodePe.Catering.Application.DataBase.Cotizacion.Commands.Update
             entity.TotalCotizacion = model.TotalCotizacion;
             entity.Observacion = model.Observacion;
             entity.EstadoCotizacion = model.EstadoCotizacion;
+            entity.BorradorJson = model.BorradorJson;
             entity.UsuarioModificacion = model.UsuarioModificacion ?? "SYSTEM";
             entity.FechaModificacion = DateTime.Now;
 
             // Actualizar productos
             if (model.CotizacionProducto != null)
             {
-                // Eliminar productos existentes
-                _databaseService.CotizacionProducto.RemoveRange(entity.CotizacionProducto);
-
-                // Agregar nuevos productos
-                foreach (var productoModel in model.CotizacionProducto)
+                var productosExistentes = entity.CotizacionProducto.ToList();
+                if (productosExistentes.Count > 0)
                 {
-                    var cotizacionProducto = new CotizacionProductoEntity
+                    _databaseService.CotizacionProducto.RemoveRange(productosExistentes);
+                    entity.CotizacionProducto.Clear();
+                    await _databaseService.SaveAsync();
+                }
+
+                var productosDistintos = model.CotizacionProducto
+                    .Where(p => p.ProductoID > 0)
+                    .GroupBy(p => p.ProductoID)
+                    .Select(g => g.First())
+                    .ToList();
+
+                if (productosDistintos.Count > 0)
+                {
+                    var nuevosProductos = productosDistintos.Select(productoModel => new CotizacionProductoEntity
                     {
                         CotizacionID = entity.CotizacionID,
                         ProductoID = productoModel.ProductoID,
-                        Cantidad = productoModel.Cantidad,
+                        Cantidad = productoModel.Cantidad > 0 ? productoModel.Cantidad : 1,
                         UsuarioCreacion = model.UsuarioModificacion ?? "SYSTEM",
                         FechaCreacion = DateTime.Now,
                         Estado = true
-                    };
-                    await _databaseService.CotizacionProducto.AddAsync(cotizacionProducto);
+                    }).ToList();
+
+                    await _databaseService.CotizacionProducto.AddRangeAsync(nuevosProductos);
                 }
             }
 
             // Actualizar servicios
             if (model.CotizacionServicio != null)
             {
-                // Eliminar servicios existentes
-                _databaseService.CotizacionServicio.RemoveRange(entity.CotizacionServicio);
-
-                // Agregar nuevos servicios
-                foreach (var servicioModel in model.CotizacionServicio)
+                var serviciosExistentes = entity.CotizacionServicio.ToList();
+                if (serviciosExistentes.Count > 0)
                 {
-                    var cotizacionServicio = new CotizacionServicioEntity
+                    _databaseService.CotizacionServicio.RemoveRange(serviciosExistentes);
+                    entity.CotizacionServicio.Clear();
+                    await _databaseService.SaveAsync();
+                }
+
+                var serviciosDistintos = model.CotizacionServicio
+                    .Where(s => s.ServicioID > 0)
+                    .GroupBy(s => s.ServicioID)
+                    .Select(g => g.First())
+                    .ToList();
+
+                if (serviciosDistintos.Count > 0)
+                {
+                    var nuevosServicios = serviciosDistintos.Select(servicioModel => new CotizacionServicioEntity
                     {
                         CotizacionID = entity.CotizacionID,
                         ServicioID = servicioModel.ServicioID,
-                        Cantidad = servicioModel.Cantidad,
+                        Cantidad = servicioModel.Cantidad > 0 ? servicioModel.Cantidad : 1,
                         UsuarioCreacion = model.UsuarioModificacion ?? "SYSTEM",
                         FechaCreacion = DateTime.Now,
                         Estado = true
-                    };
-                    await _databaseService.CotizacionServicio.AddAsync(cotizacionServicio);
+                    }).ToList();
+
+                    await _databaseService.CotizacionServicio.AddRangeAsync(nuevosServicios);
                 }
             }
 

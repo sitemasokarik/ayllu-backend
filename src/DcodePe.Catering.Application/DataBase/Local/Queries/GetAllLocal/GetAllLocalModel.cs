@@ -17,6 +17,8 @@ namespace DcodePe.Catering.Application.DataBase.Local.Queries.GetAllLocal
 
         public decimal PrecioAlquiler { get; set; }
 
+        public decimal Garantia { get; set; }
+
         public decimal HorasEvento { get; set; }
 
         //public string Fotos { get; set; }

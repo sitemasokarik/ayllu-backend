@@ -1,4 +1,3 @@
-//#if DEBUG
 using DcodePe.Catering.Application.DataBase.Blog.Commands.Create;
 using DcodePe.Catering.Application.DataBase.Blog.Commands.Delete;
 using DcodePe.Catering.Application.DataBase.Blog.Commands.Update;
@@ -90,4 +89,3 @@ namespace DcodePe.Catering.Api.Controllers
     }
 }
 
-//#endif

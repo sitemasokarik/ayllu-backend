@@ -14,6 +14,9 @@ public partial class ServicioAdicionalEntity
 
     public decimal Precio { get; set; }
 
+    /// <summary>Mínimo de invitados requeridos para contratar este servicio.</summary>
+    public int CantidadMinima { get; set; } = 1;
+
     public string Fotos { get; set; }
 
     public string UsuarioCreacion { get; set; }

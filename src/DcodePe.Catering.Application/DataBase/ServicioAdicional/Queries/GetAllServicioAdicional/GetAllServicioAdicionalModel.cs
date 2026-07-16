@@ -12,6 +12,8 @@ namespace DcodePe.Catering.Application.DataBase.ServicioAdicional.Queries.GetAll
         public string Descripcion { get; set; }
 
         public decimal Precio { get; set; }
+
+        public int CantidadMinima { get; set; }
         
         public List<string> FotosUrls { get; set; }
 

@@ -1,8 +1,11 @@
-﻿//#if DEBUG // ⚠️ Solo disponible en DESARROLLO
+//#if DEBUG // ⚠️ Solo disponible en DESARROLLO
 using DcodePe.Catering.Application.DataBase.Cliente.Commands.Create;
 using DcodePe.Catering.Application.DataBase.Cliente.Commands.Delete;
 using DcodePe.Catering.Application.DataBase.Cliente.Commands.Update;
+using DcodePe.Catering.Application.DataBase.Cliente.Commands.RegisterPortal;
 using DcodePe.Catering.Application.DataBase.Cliente.Queries.GetAllCliente;
+using DcodePe.Catering.Application.DataBase.Cliente.Queries.LoginPortal;
+using DcodePe.Catering.Application.DataBase.Cotizacion.Queries.GetByClientePortal;
 
 namespace DcodePe.Catering.Api.Controllers
 {
@@ -182,6 +185,61 @@ namespace DcodePe.Catering.Api.Controllers
             return StatusCode(StatusCodes.Status200OK,
                 ResponseApiService.Response(StatusCodes.Status200OK, clientesFiltrados, "Consulta exitosa"));
         }
+
+        [HttpGet("cotizaciones/{clienteId}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<IActionResult> GetCotizacionesByCliente(
+            [FromServices] IGetCotizacionesByClientePortalQuery query,
+            int clienteId)
+        {
+            var data = await query.Execute(clienteId);
+            return Ok(ResponseApiService.Response(StatusCodes.Status200OK, data, "Consulta exitosa"));
+        }
+
+        /// <summary>
+        /// Registro de cliente en el portal público (landing)
+        /// </summary>
+        [AllowAnonymous]
+        [HttpPost("portal/register")]
+        public async Task<IActionResult> RegisterPortal(
+            [FromServices] IRegisterClientePortalCommand command,
+            [FromBody] RegisterClientePortalModel model)
+        {
+            try
+            {
+                var data = await command.Execute(model);
+                var mensaje = data.TotalCotizacionesVinculadas > 0
+                    ? $"Cuenta creada. Se vincularon {data.TotalCotizacionesVinculadas} cotización(es) previas."
+                    : "Cliente registrado en portal";
+                return StatusCode(StatusCodes.Status201Created,
+                    ResponseApiService.Response(StatusCodes.Status201Created, data, mensaje));
+            }
+            catch (InvalidOperationException ex)
+            {
+                return BadRequest(ResponseApiService.Response(StatusCodes.Status400BadRequest, null, ex.Message));
+            }
+        }
+
+        /// <summary>
+        /// Login de cliente en el portal público
+        /// </summary>
+        [AllowAnonymous]
+        [HttpPost("portal/login")]
+        public async Task<IActionResult> LoginPortal(
+            [FromServices] ILoginClientePortalQuery query,
+            [FromBody] LoginClientePortalRequest request)
+        {
+            var data = await query.Execute(request.Email, request.Password);
+            if (data == null)
+                return Unauthorized(ResponseApiService.Response(StatusCodes.Status401Unauthorized, null, "Credenciales inválidas"));
+            return Ok(ResponseApiService.Response(StatusCodes.Status200OK, data, "Login exitoso"));
+        }
+    }
+
+    public class LoginClientePortalRequest
+    {
+        public string Email { get; set; } = string.Empty;
+        public string Password { get; set; } = string.Empty;
     }
 }
 //#endif

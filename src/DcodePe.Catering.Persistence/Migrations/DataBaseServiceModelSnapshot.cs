@@ -240,6 +240,11 @@ namespace DcodePe.Catering.Persistence.Migrations
                         .HasColumnType("nvarchar(100)")
                         .HasComment("Correo electrónico del cliente");
 
+                    b.Property<bool>("EsPortalActivo")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(false);
+
                     b.Property<bool>("EsVIP")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bit")
@@ -290,6 +295,10 @@ namespace DcodePe.Catering.Persistence.Migrations
                         .HasDefaultValue("Perú")
                         .HasComment("País del cliente");
 
+                    b.Property<string>("PasswordHash")
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
                     b.Property<string>("Telefono")
                         .IsRequired()
                         .HasMaxLength(20)
@@ -314,6 +323,10 @@ namespace DcodePe.Catering.Persistence.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)")
                         .HasComment("Tipo de documento: DNI, RUC, Pasaporte, Carnet de Extranjería");
+
+                    b.Property<string>("UserNamePortal")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("UsuarioCreacion")
                         .IsRequired()
@@ -346,6 +359,11 @@ namespace DcodePe.Catering.Persistence.Migrations
 
                     b.HasIndex("TipoCliente")
                         .HasDatabaseName("IX_Cliente_TipoCliente");
+
+                    b.HasIndex("UserNamePortal")
+                        .IsUnique()
+                        .HasDatabaseName("UQ_Cliente_UserNamePortal")
+                        .HasFilter("[UserNamePortal] IS NOT NULL");
 
                     b.ToTable("Cliente", (string)null);
                 });
@@ -892,6 +910,272 @@ namespace DcodePe.Catering.Persistence.Migrations
                         .HasName("PK__Evento__1EEB5901FC5279F4");
 
                     b.ToTable("Evento", (string)null);
+                });
+
+            modelBuilder.Entity("DcodePe.Catering.Domain.Entities.Facturacion.ComprobanteDetalleEntity", b =>
+                {
+                    b.Property<int>("ComprobanteDetalleID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ComprobanteDetalleID"));
+
+                    b.Property<decimal>("Cantidad")
+                        .HasColumnType("decimal(12,2)");
+
+                    b.Property<string>("Codigo")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<int>("ComprobanteID")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Descripcion")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<bool?>("Estado")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(true);
+
+                    b.Property<DateTime?>("FechaCreacion")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("FechaEliminacion")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("FechaModificacion")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("IdTipoIgv")
+                        .IsRequired()
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
+
+                    b.Property<decimal>("Igv")
+                        .HasColumnType("decimal(12,2)");
+
+                    b.Property<decimal>("Importe")
+                        .HasColumnType("decimal(12,2)");
+
+                    b.Property<int>("Item")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("Subtotal")
+                        .HasColumnType("decimal(12,2)");
+
+                    b.Property<string>("TipoIgv")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("UnidadMedida")
+                        .IsRequired()
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
+
+                    b.Property<string>("UsuarioCreacion")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UsuarioEliminacion")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UsuarioModificacion")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal>("Valor")
+                        .HasColumnType("decimal(12,2)");
+
+                    b.HasKey("ComprobanteDetalleID");
+
+                    b.HasIndex("ComprobanteID");
+
+                    b.ToTable("ComprobanteDetalle", (string)null);
+                });
+
+            modelBuilder.Entity("DcodePe.Catering.Domain.Entities.Facturacion.ComprobanteElectronicoEntity", b =>
+                {
+                    b.Property<int>("ComprobanteID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ComprobanteID"));
+
+                    b.Property<string>("ClienteDireccion")
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<string>("ClienteDocumento")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
+
+                    b.Property<string>("ClienteNombre")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<string>("ClienteTelefono")
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
+
+                    b.Property<string>("Correlativo")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
+
+                    b.Property<int?>("CotizacionID")
+                        .HasColumnType("int");
+
+                    b.Property<bool?>("Estado")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(true);
+
+                    b.Property<string>("EstadoComprobante")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
+
+                    b.Property<DateTime?>("FechaCreacion")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("(getdate())");
+
+                    b.Property<DateTime?>("FechaEliminacion")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("FechaEmision")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("FechaModificacion")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("FormaPago")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<decimal>("Igv")
+                        .HasColumnType("decimal(12,2)");
+
+                    b.Property<string>("MedioPago")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("ModoEmision")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
+
+                    b.Property<string>("Moneda")
+                        .IsRequired()
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
+
+                    b.Property<string>("NumeroCompleto")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
+
+                    b.Property<decimal>("OpExoneradas")
+                        .HasColumnType("decimal(12,2)");
+
+                    b.Property<decimal>("OpGravadas")
+                        .HasColumnType("decimal(12,2)");
+
+                    b.Property<decimal>("OpInafectas")
+                        .HasColumnType("decimal(12,2)");
+
+                    b.Property<decimal>("Recibido")
+                        .HasColumnType("decimal(12,2)");
+
+                    b.Property<string>("Serie")
+                        .IsRequired()
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
+
+                    b.Property<decimal>("Subtotal")
+                        .HasColumnType("decimal(12,2)");
+
+                    b.Property<string>("SunatCdr")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("SunatRespuesta")
+                        .HasMaxLength(2000)
+                        .HasColumnType("nvarchar(2000)");
+
+                    b.Property<string>("SunatTicket")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("Tipo")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
+
+                    b.Property<string>("TipoDocumento")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<decimal>("Total")
+                        .HasColumnType("decimal(12,2)");
+
+                    b.Property<string>("UsuarioCreacion")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UsuarioEliminacion")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UsuarioModificacion")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal>("Vuelto")
+                        .HasColumnType("decimal(12,2)");
+
+                    b.HasKey("ComprobanteID");
+
+                    b.HasIndex("NumeroCompleto")
+                        .IsUnique();
+
+                    b.ToTable("ComprobanteElectronico", (string)null);
+                });
+
+            modelBuilder.Entity("DcodePe.Catering.Domain.Entities.Facturacion.ComprobanteSerieEntity", b =>
+                {
+                    b.Property<int>("ComprobanteSerieID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ComprobanteSerieID"));
+
+                    b.Property<string>("Serie")
+                        .IsRequired()
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
+
+                    b.Property<string>("Tipo")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
+
+                    b.Property<int>("UltimoCorrelativo")
+                        .HasColumnType("int");
+
+                    b.HasKey("ComprobanteSerieID");
+
+                    b.HasIndex("Serie")
+                        .IsUnique();
+
+                    b.ToTable("ComprobanteSerie", (string)null);
                 });
 
             modelBuilder.Entity("DcodePe.Catering.Domain.Entities.LocalEntity", b =>
@@ -1502,6 +1786,143 @@ namespace DcodePe.Catering.Persistence.Migrations
                     b.ToTable("ServicioAdicional", (string)null);
                 });
 
+            modelBuilder.Entity("DcodePe.Catering.Domain.Entities.Tickets.TicketInternoEntity", b =>
+                {
+                    b.Property<int>("TicketID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("TicketID"));
+
+                    b.Property<int?>("AsignadoUsuarioID")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("CotizacionID")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("CreadoPorClienteID")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("CreadoPorUsuarioID")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Descripcion")
+                        .IsRequired()
+                        .HasMaxLength(2000)
+                        .HasColumnType("nvarchar(2000)");
+
+                    b.Property<bool?>("Estado")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(true);
+
+                    b.Property<string>("EstadoTicket")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
+
+                    b.Property<DateTime?>("FechaCreacion")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("(getdate())");
+
+                    b.Property<DateTime?>("FechaEliminacion")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("FechaModificacion")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Prioridad")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
+
+                    b.Property<int?>("RolDestinoID")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Titulo")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<string>("UsuarioCreacion")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UsuarioEliminacion")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UsuarioModificacion")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("TicketID");
+
+                    b.ToTable("TicketInterno", (string)null);
+                });
+
+            modelBuilder.Entity("DcodePe.Catering.Domain.Entities.Tickets.TicketMensajeEntity", b =>
+                {
+                    b.Property<int>("TicketMensajeID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("TicketMensajeID"));
+
+                    b.Property<string>("AutorNombre")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<int?>("ClienteID")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("EsInterno")
+                        .HasColumnType("bit");
+
+                    b.Property<bool?>("Estado")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(true);
+
+                    b.Property<DateTime?>("FechaCreacion")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("(getdate())");
+
+                    b.Property<DateTime?>("FechaEliminacion")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("FechaModificacion")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Mensaje")
+                        .IsRequired()
+                        .HasMaxLength(4000)
+                        .HasColumnType("nvarchar(4000)");
+
+                    b.Property<int>("TicketID")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UsuarioCreacion")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UsuarioEliminacion")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("UsuarioID")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UsuarioModificacion")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("TicketMensajeID");
+
+                    b.HasIndex("TicketID");
+
+                    b.ToTable("TicketMensaje", (string)null);
+                });
+
             modelBuilder.Entity("DcodePe.Catering.Domain.Entities.User.UserEntity", b =>
                 {
                     b.Property<int>("UserId")
@@ -1722,6 +2143,17 @@ namespace DcodePe.Catering.Persistence.Migrations
                     b.Navigation("Servicio");
                 });
 
+            modelBuilder.Entity("DcodePe.Catering.Domain.Entities.Facturacion.ComprobanteDetalleEntity", b =>
+                {
+                    b.HasOne("DcodePe.Catering.Domain.Entities.Facturacion.ComprobanteElectronicoEntity", "Comprobante")
+                        .WithMany("Detalles")
+                        .HasForeignKey("ComprobanteID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Comprobante");
+                });
+
             modelBuilder.Entity("DcodePe.Catering.Domain.Entities.PaqueteProductoEntity", b =>
                 {
                     b.HasOne("DcodePe.Catering.Domain.Entities.PaqueteEntity", "Paquete")
@@ -1791,6 +2223,17 @@ namespace DcodePe.Catering.Persistence.Migrations
                     b.Navigation("Categoria");
                 });
 
+            modelBuilder.Entity("DcodePe.Catering.Domain.Entities.Tickets.TicketMensajeEntity", b =>
+                {
+                    b.HasOne("DcodePe.Catering.Domain.Entities.Tickets.TicketInternoEntity", "Ticket")
+                        .WithMany("Mensajes")
+                        .HasForeignKey("TicketID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Ticket");
+                });
+
             modelBuilder.Entity("DcodePe.Catering.Domain.Entities.UsuarioEntity", b =>
                 {
                     b.HasOne("DcodePe.Catering.Domain.Entities.RolEntity", "Rol")
@@ -1833,6 +2276,11 @@ namespace DcodePe.Catering.Persistence.Migrations
                     b.Navigation("Cotizaciones");
                 });
 
+            modelBuilder.Entity("DcodePe.Catering.Domain.Entities.Facturacion.ComprobanteElectronicoEntity", b =>
+                {
+                    b.Navigation("Detalles");
+                });
+
             modelBuilder.Entity("DcodePe.Catering.Domain.Entities.LocalEntity", b =>
                 {
                     b.Navigation("Cotizaciones");
@@ -1871,6 +2319,11 @@ namespace DcodePe.Catering.Persistence.Migrations
                     b.Navigation("CotizacionServicio");
 
                     b.Navigation("PaqueteServicio");
+                });
+
+            modelBuilder.Entity("DcodePe.Catering.Domain.Entities.Tickets.TicketInternoEntity", b =>
+                {
+                    b.Navigation("Mensajes");
                 });
 
             modelBuilder.Entity("DcodePe.Catering.Domain.Entities.User.UserEntity", b =>

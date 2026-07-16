@@ -1,4 +1,4 @@
-﻿using DcodePe.Catering.Application.DataBase.Evento.Queries.GetAllEvento;
+using DcodePe.Catering.Application.DataBase.Evento.Queries.GetAllEvento;
 
 namespace DcodePe.Catering.Application.DataBase.Usuario.Queries.GetAllUsuario
 {
@@ -9,6 +9,8 @@ namespace DcodePe.Catering.Application.DataBase.Usuario.Queries.GetAllUsuario
         public string Nombre { get; set; }
 
         public string Email { get; set; }
+
+        public string UserName { get; set; }
 
         public string Password { get; set; }
 

@@ -2,6 +2,8 @@
 #nullable disable
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
 
 namespace DcodePe.Catering.Domain.Entities;
 
@@ -34,5 +36,21 @@ public partial class EventoEntity
 
     public bool? Estado { get; set; }
 
+    /// <summary>
+    /// JSON: minInvitados, garantia, tarifas[{ minInvitados, precioPorInvitado }]
+    /// </summary>
+    public string TarifasInvitadoJson { get; set; }
+
     public virtual ICollection<CotizacionEntity> Cotizaciones { get; set; } = new List<CotizacionEntity>();
+
+    [NotMapped]
+    public ICollection<string> FotosUrls
+    {
+        get => string.IsNullOrEmpty(Fotos)
+            ? new List<string>()
+            : Fotos.Split(';', StringSplitOptions.RemoveEmptyEntries).ToList();
+        set => Fotos = value != null && value.Any()
+            ? string.Join(";", value)
+            : null;
+    }
 }

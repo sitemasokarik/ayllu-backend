@@ -48,7 +48,7 @@ namespace DcodePe.Catering.Persistence.Configuration
 
             entityBuilder.Property(e => e.Pais)
                 .HasMaxLength(100)
-                .HasDefaultValue("Perú");
+                .HasDefaultValue("Perï¿½");
 
             entityBuilder.Property(e => e.Facebook)
                 .HasMaxLength(200);
@@ -67,6 +67,26 @@ namespace DcodePe.Catering.Persistence.Configuration
 
             entityBuilder.Property(e => e.Logo)
                 .HasMaxLength(500);
+
+            entityBuilder.Property(e => e.BancoNombre).HasMaxLength(120);
+            entityBuilder.Property(e => e.NumeroCuenta).HasMaxLength(50);
+            entityBuilder.Property(e => e.Cci).HasMaxLength(50);
+            entityBuilder.Property(e => e.YapeNumero).HasMaxLength(20);
+            entityBuilder.Property(e => e.PlinNumero).HasMaxLength(20);
+            entityBuilder.Property(e => e.QrPagoUrl).HasMaxLength(500);
+            entityBuilder.Property(e => e.InstruccionesPago).HasMaxLength(1000);
+            entityBuilder.Property(e => e.CuentasPagoJson).HasMaxLength(4000);
+            entityBuilder.Property(e => e.MontoAdelantoReserva).HasColumnType("decimal(18,2)");
+            entityBuilder.Property(e => e.GeneraFactElect).HasDefaultValue(false);
+            entityBuilder.Property(e => e.Ubigeo).HasMaxLength(10);
+            entityBuilder.Property(e => e.RutaCertificadoServidor).HasMaxLength(500);
+            entityBuilder.Property(e => e.CertificadoFileName).HasMaxLength(200);
+            entityBuilder.Property(e => e.ClaveCertificado).HasMaxLength(1000);
+            entityBuilder.Property(e => e.UsuarioSol).HasMaxLength(50);
+            entityBuilder.Property(e => e.ClaveSol).HasMaxLength(1000);
+            entityBuilder.Property(e => e.ApiPeruDevToken).HasMaxLength(1000);
+            entityBuilder.Property(e => e.SunatModo).HasMaxLength(20).HasDefaultValue("DESARROLLO");
+            entityBuilder.Property(e => e.SunatWsProduccion).HasMaxLength(500);
 
             entityBuilder.Property(e => e.Estado)
                 .HasDefaultValue(true);

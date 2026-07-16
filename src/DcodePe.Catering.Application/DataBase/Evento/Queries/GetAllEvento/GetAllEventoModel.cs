@@ -1,5 +1,7 @@
 using DcodePe.Catering.Application.DataBase.Usuario.Queries.GetAllUsuario;
 
+using System.Collections.Generic;
+
 namespace DcodePe.Catering.Application.DataBase.Evento.Queries.GetAllEvento
 {
     public class GetAllEventoModel
@@ -10,10 +12,7 @@ namespace DcodePe.Catering.Application.DataBase.Evento.Queries.GetAllEvento
 
         public string Descripcion { get; set; }
 
-        /// <summary>
-        /// URL de la foto del evento
-        /// </summary>
-        public string Fotos { get; set; }
+        public List<string> FotosUrls { get; set; }
 
         public string EstadoEvento { get; set; }
 
@@ -30,5 +29,7 @@ namespace DcodePe.Catering.Application.DataBase.Evento.Queries.GetAllEvento
         public DateTime? FechaEliminacion { get; set; }
 
         public bool? Estado { get; set; }
+
+        public string TarifasInvitadoJson { get; set; }
     }
 }

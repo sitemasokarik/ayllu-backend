@@ -30,6 +30,8 @@ namespace DcodePe.Catering.Application.DataBase.Rol.Queries.GetById
                             PaginaNombre = p.Pagina.Nombre,
                             Url = p.Pagina.Url,
                             Icono = p.Pagina.Icono,
+                            GrupoMenu = p.Pagina.GrupoMenu,
+                            OrdenMenu = p.Pagina.OrdenMenu,
                             PuedeVer = p.PuedeVer ?? false,
                             PuedeCrear = p.PuedeCrear ?? false,
                             PuedeEditar = p.PuedeEditar ?? false,

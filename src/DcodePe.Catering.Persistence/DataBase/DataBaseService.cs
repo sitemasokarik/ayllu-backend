@@ -1,11 +1,16 @@
-﻿using DcodePe.Catering.Domain.Entities;
+using DcodePe.Catering.Domain.Entities;
 using DcodePe.Catering.Domain.Entities.Clientes;
+using DcodePe.Catering.Domain.Entities.Facturacion;
+using DcodePe.Catering.Domain.Entities.Pagos;
+using DcodePe.Catering.Domain.Entities.Tickets;
 using DcodePe.Catering.Persistence.Configuration;
 
 namespace DcodePe.Catering.Persistence.DataBase
 {
     public class DataBaseService: DbContext, IDataBaseService
     {
+        public static bool UseSqliteProvider { get; set; }
+
         public DataBaseService(DbContextOptions options): base(options)
         {
         }
@@ -34,6 +39,14 @@ namespace DcodePe.Catering.Persistence.DataBase
         public DbSet<UsuarioEntity> Usuario { get; set; }
         public DbSet<EmpresaEntity> Empresa { get; set; }
         public DbSet<ContactanosEntity> Contactanos { get; set; }
+        public DbSet<ComprobanteElectronicoEntity> ComprobanteElectronico { get; set; }
+        public DbSet<ComprobanteDetalleEntity> ComprobanteDetalle { get; set; }
+        public DbSet<ComprobanteSerieEntity> ComprobanteSerie { get; set; }
+        public DbSet<TicketInternoEntity> TicketInterno { get; set; }
+        public DbSet<TicketMensajeEntity> TicketMensaje { get; set; }
+        public DbSet<TicketVistoEntity> TicketVisto { get; set; }
+        public DbSet<PagoVoucherEntity> PagoVoucher { get; set; }
+        public DbSet<PagoMercadoPagoEntity> PagoMercadoPago { get; set; }
 
         public async Task<bool> SaveAsync()
         {
@@ -52,6 +65,14 @@ namespace DcodePe.Catering.Persistence.DataBase
             modelBuilder.ApplyConfiguration(new CategoriaConfiguration());
             modelBuilder.ApplyConfiguration(new ProductoConfiguration());
             modelBuilder.ApplyConfiguration(new ClienteConfiguration());
+            modelBuilder.ApplyConfiguration(new ComprobanteElectronicoConfiguration());
+            modelBuilder.ApplyConfiguration(new ComprobanteDetalleConfiguration());
+            modelBuilder.ApplyConfiguration(new ComprobanteSerieConfiguration());
+            modelBuilder.ApplyConfiguration(new TicketInternoConfiguration());
+            modelBuilder.ApplyConfiguration(new TicketMensajeConfiguration());
+            modelBuilder.ApplyConfiguration(new TicketVistoConfiguration());
+            modelBuilder.ApplyConfiguration(new PagoVoucherConfiguration());
+            modelBuilder.ApplyConfiguration(new PagoMercadoPagoConfiguration());
 
             modelBuilder.Entity<PaqueteEntity>(entity =>
             {
@@ -105,6 +126,8 @@ namespace DcodePe.Catering.Persistence.DataBase
             // Configuración de otras entidades
             EntityConfiguration(modelBuilder);
 
+            if (UseSqliteProvider)
+                SqliteCompatibility.Apply(modelBuilder);
         }
         
         private void EntityConfiguration(ModelBuilder modelBuilder)

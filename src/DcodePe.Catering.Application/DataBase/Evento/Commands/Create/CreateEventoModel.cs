@@ -12,10 +12,7 @@ namespace DcodePe.Catering.Application.DataBase.Evento.Commands.Create
 
         public string Descripcion { get; set; }
 
-        /// <summary>
-        /// URL de la foto del evento
-        /// </summary>
-        public string Fotos { get; set; }
+        public List<string> FotosUrls { get; set; }
 
         public string EstadoEvento { get; set; }
     }

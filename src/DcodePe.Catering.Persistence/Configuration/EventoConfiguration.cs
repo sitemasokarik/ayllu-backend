@@ -40,6 +40,9 @@ namespace DcodePe.Catering.Persistence.Configuration
             
             entityBuilder.Property(e => e.UsuarioModificacion).HasMaxLength(100);
 
+            entityBuilder.Property(e => e.TarifasInvitadoJson)
+                .HasColumnType("TEXT");
+
         }
     }
 }

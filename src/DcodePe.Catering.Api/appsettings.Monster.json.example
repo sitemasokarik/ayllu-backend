@@ -1,0 +1,40 @@
+{
+  "Logging": {
+    "LogLevel": {
+      "Default": "Information",
+      "Microsoft.AspNetCore": "Warning"
+    }
+  },
+  "Database": {
+    "ApplyMigrationsOnStartup": false,
+    "ClearTransactionalDataOnStartup": false
+  },
+  "ConnectionStrings": {
+    "SQLConnectionString": "Server=db34174.databaseasp.net;Database=db34174;User Id=db34174;Password='TU_PASSWORD_DB';Encrypt=False;MultipleActiveResultSets=True;"
+  },
+  "Jwt": {
+    "SecretKeyJwt": "ayllu-prod-jwt-5b8e9adf-7edb-49c7-896a-4c124662074c-monster",
+    "IssuerJwt": "https://aylluperuback.premiumasp.net",
+    "AudienceJwt": "https://aylluperuback.premiumasp.net"
+  },
+  "ConsultaDocumento": {
+    "ApiPeruToken": ""
+  },
+  "Sunat": {
+    "Integrado": false,
+    "CertStoragePath": "fe/certificado",
+    "XmlStoragePath": "fe/xml",
+    "CdrStoragePath": "fe/cdr",
+    "WsDesarrollo": "https://e-beta.sunat.gob.pe/ol-ti-itcpfegem-beta/billService",
+    "WsProduccion": "https://e-factura.sunat.gob.pe/ol-ti-itcpfegem/billService"
+  },
+  "MercadoPago": {
+    "AccessToken": "",
+    "PublicKey": "",
+    "WebhookSecret": "",
+    "SuccessUrl": "https://ayllueventos.com/mi-cuenta/cotizaciones?mp=ok",
+    "FailureUrl": "https://ayllueventos.com/mi-cuenta/cotizaciones?mp=fail",
+    "PendingUrl": "https://ayllueventos.com/mi-cuenta/cotizaciones?mp=pending",
+    "NotificationUrl": "https://aylluperuback.premiumasp.net/api/v1/webhooks/mercadopago"
+  }
+}

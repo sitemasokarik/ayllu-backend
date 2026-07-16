@@ -1,10 +1,12 @@
 ﻿global using DcodePe.Catering.Application.External.ApplicationInsightsService;
 global using DcodePe.Catering.Application.External.GetTokenJwt;
+global using DcodePe.Catering.Application.External.Sunat;
 global using DcodePe.Catering.Application.External.MailerSendEmail;
 global using DcodePe.Catering.Domain.Models.ApplicationInsights;
 global using DcodePe.Catering.Domain.Models.MailerSendEmail;
 global using DcodePe.Catering.External.ApplicationInsights;
 global using DcodePe.Catering.External.GetTokenJwt;
+global using DcodePe.Catering.External.Sunat;
 global using DcodePe.Catering.External.MailerSendEmail;
 global using Microsoft.ApplicationInsights.AspNetCore.Extensions;
 global using Microsoft.AspNetCore.Authentication.JwtBearer;

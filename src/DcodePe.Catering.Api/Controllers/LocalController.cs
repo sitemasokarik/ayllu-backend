@@ -3,11 +3,12 @@ using DcodePe.Catering.Application.DataBase.Local.Commands.CreateLocal;
 using DcodePe.Catering.Application.DataBase.Local.Commands.Update;
 using DcodePe.Catering.Application.DataBase.Local.Commands.Delete;
 using DcodePe.Catering.Application.DataBase.Local.Queries.GetAllLocal;
+using DcodePe.Catering.Application.DataBase.Cotizacion.Queries.GetFechasReservadasLocal;
 
 namespace DcodePe.Catering.Api.Controllers
 {
     /// <summary>
-    /// Controlador para la gestión de locales de eventos
+    /// Controlador para la gestiÃ³n de locales de eventos
     /// </summary>
     [Authorize]
     [Route("api/v1/local")]
@@ -113,7 +114,17 @@ namespace DcodePe.Catering.Api.Controllers
             return StatusCode(StatusCodes.Status200OK,
                 ResponseApiService.Response(StatusCodes.Status200OK, data, "Consulta exitosa"));
         }
+
+        [HttpGet("{id}/fechas-reservadas")]
+        [AllowAnonymous]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<IActionResult> GetFechasReservadas(
+            int id,
+            [FromServices] IGetFechasReservadasLocalQuery query)
+        {
+            var data = await query.Execute(id);
+            return StatusCode(StatusCodes.Status200OK,
+                ResponseApiService.Response(StatusCodes.Status200OK, data, "Consulta exitosa"));
+        }
     }
 }
-
-//#endif

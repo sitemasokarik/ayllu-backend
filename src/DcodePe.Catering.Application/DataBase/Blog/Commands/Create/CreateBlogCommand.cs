@@ -21,6 +21,11 @@ namespace DcodePe.Catering.Application.DataBase.Blog.Commands.Create
             {
                 Titulo = model.Titulo,
                 Descripcion = model.Descripcion,
+                Resumen = model.Resumen,
+                MisionTitulo = model.MisionTitulo,
+                MisionTexto = model.MisionTexto,
+                VisionTitulo = model.VisionTitulo,
+                VisionTexto = model.VisionTexto,
                 ValoresJson = model.Valores != null && model.Valores.Any()
                     ? JsonSerializer.Serialize(model.Valores.Select(v => new ValorEmpresarial
                     {

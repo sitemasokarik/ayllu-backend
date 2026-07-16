@@ -22,8 +22,12 @@ namespace DcodePe.Catering.Application.DataBase.Cotizacion.Commands.Create
         public decimal PrecioPorCubierto { get; set; }
         public decimal PrecioPorCubiertoConDescuento { get; set; }
         public decimal TotalCotizacion { get; set; }
-        public string Observacion { get; set; }
+        public string? Observacion { get; set; }
         public string EstadoCotizacion { get; set; }
+        public string OrigenCotizacion { get; set; } = "Admin";
+        public string? BorradorJson { get; set; }
+        public int? CreadoPorUsuarioID { get; set; }
+        public string? CreadoPorNombre { get; set; }
         public string UsuarioCreacion { get; set; }
         public bool? Estado { get; set; }
         public virtual List<CreateCotizacionProductoModel> CotizacionProducto { get; set; }

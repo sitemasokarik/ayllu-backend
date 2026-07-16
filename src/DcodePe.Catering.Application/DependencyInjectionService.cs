@@ -1,4 +1,28 @@
+using DcodePe.Catering.Application.ConsultaDocumento;
 using DcodePe.Catering.Application.DataBase.Blog.Commands.Create;
+using DcodePe.Catering.Application.DataBase.Cliente.Commands.RegisterPortal;
+using DcodePe.Catering.Application.DataBase.Cliente.Commands.UpdatePortalProfile;
+using DcodePe.Catering.Application.DataBase.Cliente.Commands.ChangePortalPassword;
+using DcodePe.Catering.Application.DataBase.Cliente.Queries.LoginPortal;
+using DcodePe.Catering.Application.DataBase.Cotizacion.Queries.GetByClientePortal;
+using DcodePe.Catering.Application.DataBase.Cotizacion.Queries.GetCotizacionFacturacion;
+using DcodePe.Catering.Application.DataBase.Cotizacion.Queries.GetFechasReservadasLocal;
+using DcodePe.Catering.Application.DataBase.PagoVoucher.Commands.Review;
+using DcodePe.Catering.Application.DataBase.PagoVoucher.Commands.UploadPortal;
+using DcodePe.Catering.Application.DataBase.PagoVoucher.Queries.GetPendientes;
+using DcodePe.Catering.Application.DataBase.PagoVoucher.Queries.GetHistorial;
+using DcodePe.Catering.Application.DataBase.Comprobante.Commands.Create;
+using DcodePe.Catering.Application.DataBase.Comprobante.Queries.GetAllComprobante;
+using DcodePe.Catering.Application.DataBase.Comprobante.Queries.GetComprobanteById;
+using DcodePe.Catering.Application.DataBase.Cotizacion.Queries.GetCotizacionFacturacion;
+using DcodePe.Catering.Application.DataBase.MercadoPago.Commands.CreatePreference;
+using DcodePe.Catering.Application.DataBase.MercadoPago.Commands.ProcessWebhook;
+using DcodePe.Catering.Application.DataBase.MercadoPago.Queries.GetPagoEstado;
+using DcodePe.Catering.Application.DataBase.Ticket.Commands.AddMensaje;
+using DcodePe.Catering.Application.DataBase.Ticket.Commands.Create;
+using DcodePe.Catering.Application.DataBase.Ticket.Commands.UpdateEstado;
+using DcodePe.Catering.Application.DataBase.Ticket.Queries.GetAllTicket;
+using DcodePe.Catering.Application.DataBase.Ticket.Queries.GetTicketDetalle;
 using DcodePe.Catering.Application.DataBase.Blog.Commands.Delete;
 using DcodePe.Catering.Application.DataBase.Blog.Commands.Update;
 using DcodePe.Catering.Application.DataBase.Blog.Queries.GetAllBlog;
@@ -73,7 +97,7 @@ namespace DcodePe.Catering.Application
 
             services.AddSingleton(mapper.CreateMapper());
 
-            // ? Servicio de hash de contraseñas con BCrypt
+            // ? Servicio de hash de contrase?as con BCrypt
             services.AddScoped<IPasswordHashService, PasswordHashService>();
 
             services.AddTransient<ICreateUserCommand, CreateUserCommand>();
@@ -194,6 +218,7 @@ namespace DcodePe.Catering.Application
             services.AddScoped<IGetAllPaqueteQuery, GetAllPaqueteQuery>();
             services.AddScoped<ICreatePaqueteProductoCommand, CreatePaqueteProductoCommand>();
             services.AddScoped<ICreateCotizacionCommand, CreateCotizacionCommand>();
+            services.AddScoped<IClaimCotizacionCommand, ClaimCotizacionCommand>();
             services.AddScoped<IUpdateCotizacionCommand, UpdateCotizacionCommand>();
             services.AddScoped<IDeleteCotizacionCommand, DeleteCotizacionCommand>();
             services.AddScoped<IGetAllCotizacionQuery, GetAllCotizacionQuery>();
@@ -240,6 +265,39 @@ namespace DcodePe.Catering.Application
             services.AddTransient<IDeletePermisoCommand, DeletePermisoCommand>();
             services.AddTransient<IGetAllPermisoQuery, GetAllPermisoQuery>();
             services.AddTransient<IGetPermisosByRolIdQuery, GetPermisosByRolIdQuery>();
+
+            // Consulta Documento (RUC/DNI)
+            services.AddHttpClient<IConsultaDocumentoService, ConsultaDocumentoService>();
+
+            // Comprobante
+            services.AddScoped<ICreateComprobanteCommand, CreateComprobanteCommand>();
+            services.AddScoped<IGetAllComprobanteQuery, GetAllComprobanteQuery>();
+            services.AddScoped<IGetComprobanteByIdQuery, GetComprobanteByIdQuery>();
+            services.AddScoped<IGetCotizacionFacturacionQuery, GetCotizacionFacturacionQuery>();
+
+            // Ticket interno
+            services.AddScoped<ICreateTicketCommand, CreateTicketCommand>();
+            services.AddScoped<IAddTicketMensajeCommand, AddTicketMensajeCommand>();
+            services.AddScoped<IUpdateTicketEstadoCommand, UpdateTicketEstadoCommand>();
+            services.AddScoped<IGetAllTicketQuery, GetAllTicketQuery>();
+            services.AddScoped<IGetTicketDetalleQuery, GetTicketDetalleQuery>();
+
+            // Cliente portal
+            services.AddScoped<IRegisterClientePortalCommand, RegisterClientePortalCommand>();
+            services.AddScoped<ILoginClientePortalQuery, LoginClientePortalQuery>();
+            services.AddScoped<IGetCotizacionesByClientePortalQuery, GetCotizacionesByClientePortalQuery>();
+            services.AddScoped<IUpdateClientePortalProfileCommand, UpdateClientePortalProfileCommand>();
+            services.AddScoped<IChangeClientePortalPasswordCommand, ChangeClientePortalPasswordCommand>();
+
+            services.AddScoped<IGetFechasReservadasLocalQuery, GetFechasReservadasLocalQuery>();
+            services.AddScoped<IUploadPagoVoucherPortalCommand, UploadPagoVoucherPortalCommand>();
+            services.AddScoped<IReviewPagoVoucherCommand, ReviewPagoVoucherCommand>();
+            services.AddScoped<IGetPagoVoucherPendientesQuery, GetPagoVoucherPendientesQuery>();
+            services.AddScoped<IGetPagoVoucherHistorialQuery, GetPagoVoucherHistorialQuery>();
+
+            services.AddScoped<ICreateMercadoPagoPreferenceCommand, CreateMercadoPagoPreferenceCommand>();
+            services.AddScoped<IProcessMercadoPagoWebhookCommand, ProcessMercadoPagoWebhookCommand>();
+            services.AddScoped<IGetCotizacionPagoEstadoQuery, GetCotizacionPagoEstadoQuery>();
 
             return services;
         }

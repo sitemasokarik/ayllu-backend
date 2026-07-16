@@ -14,7 +14,9 @@ namespace DcodePe.Catering.Application.DataBase.Evento.Queries.GetAllEvento
                     EventoID = evento.EventoID,
                     Nombre = evento.Nombre,
                     Descripcion = evento.Descripcion,
-                    Fotos = evento.Fotos,
+                    FotosUrls = string.IsNullOrEmpty(evento.Fotos)
+                        ? new List<string>()
+                        : evento.Fotos.Split(';', StringSplitOptions.RemoveEmptyEntries).ToList(),
                     EstadoEvento = evento.EstadoEvento,
                     UsuarioCreacion = evento.UsuarioCreacion,
                     FechaCreacion = evento.FechaCreacion,
@@ -22,7 +24,8 @@ namespace DcodePe.Catering.Application.DataBase.Evento.Queries.GetAllEvento
                     FechaModificacion = evento.FechaModificacion,
                     UsuarioEliminacion = evento.UsuarioEliminacion,
                     FechaEliminacion = evento.FechaEliminacion,
-                    Estado = evento.Estado
+                    Estado = evento.Estado,
+                    TarifasInvitadoJson = evento.TarifasInvitadoJson
                 }).ToListAsync();
 
             return result;

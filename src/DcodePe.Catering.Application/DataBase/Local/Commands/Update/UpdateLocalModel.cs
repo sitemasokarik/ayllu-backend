@@ -9,6 +9,7 @@ namespace DcodePe.Catering.Application.DataBase.Local.Commands.Update
         public string Direccion { get; set; }
         public int Capacidad { get; set; }
         public decimal PrecioAlquiler { get; set; }
+        public decimal Garantia { get; set; }
         public decimal HorasEvento { get; set; }
         //public string Fotos { get; set; }
         public List<string> FotosUrls { get; set; }

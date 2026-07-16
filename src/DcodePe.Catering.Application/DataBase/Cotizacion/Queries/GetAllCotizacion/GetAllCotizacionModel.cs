@@ -21,6 +21,8 @@ namespace DcodePe.Catering.Application.DataBase.Cotizacion.Queries.GetAllCotizac
 
         public DateTime? FechaTentativaOpcional { get; set; }
 
+        public DateTime? FechaReservada { get; set; }
+
         public DateTime? FechaContacto { get; set; }
 
         public TimeOnly? HoraContacto { get; set; }
@@ -65,9 +67,27 @@ namespace DcodePe.Catering.Application.DataBase.Cotizacion.Queries.GetAllCotizac
 
         public decimal TotalCotizacion { get; set; }
 
+        public int? ComprobanteID { get; set; }
+
+        public string ComprobanteNumero { get; set; }
+
         public string Observacion { get; set; }
 
         public string EstadoCotizacion { get; set; }
+
+        public string OrigenCotizacion { get; set; }
+
+        public string BorradorJson { get; set; }
+
+        public int? CreadoPorUsuarioID { get; set; }
+
+        public string CreadoPorNombre { get; set; }
+
+        public int? ResponsableUsuarioID { get; set; }
+
+        public string ResponsableNombre { get; set; }
+
+        public DateTime? FechaAsignacion { get; set; }
 
         public string UsuarioCreacion { get; set; }
 

@@ -1,3 +1,5 @@
+using DcodePe.Catering.Application.Helpers;
+
 namespace DcodePe.Catering.Application.DataBase.Cliente.Queries.GetAllCliente
 {
     public class GetAllClienteQuery : IGetAllClienteQuery
@@ -34,7 +36,10 @@ namespace DcodePe.Catering.Application.DataBase.Cliente.Queries.GetAllCliente
                     UsuarioModificacion = c.UsuarioModificacion,
                     FechaModificacion = c.FechaModificacion,
                     Estado = c.Estado,
-                    TotalCotizaciones = c.Cotizaciones.Count(cot => cot.Estado == true)
+                    TotalCotizaciones = c.Cotizaciones.Count(cot => cot.Estado == true),
+                    EsPortalActivo = c.EsPortalActivo,
+                    UserNamePortal = c.UserNamePortal,
+                    TieneCuentaPortal = c.EsPortalActivo && c.UserNamePortal != null && c.UserNamePortal != ""
                 })
                 .ToListAsync();
 
@@ -43,8 +48,10 @@ namespace DcodePe.Catering.Application.DataBase.Cliente.Queries.GetAllCliente
 
         public async Task<GetAllClienteModel> GetByNumeroDocumento(string numeroDocumento)
         {
+            var dni = DocumentoHelper.NormalizarDni(numeroDocumento);
             var result = await _databaseService.Cliente
-                .Where(c => c.NumeroDocumento == numeroDocumento && c.Estado == true)
+                .Where(c => c.Estado == true &&
+                    (c.NumeroDocumento == numeroDocumento || c.NumeroDocumento == dni))
                 .Select(c => new GetAllClienteModel
                 {
                     ClienteID = c.ClienteID,
@@ -66,7 +73,10 @@ namespace DcodePe.Catering.Application.DataBase.Cliente.Queries.GetAllCliente
                     UsuarioModificacion = c.UsuarioModificacion,
                     FechaModificacion = c.FechaModificacion,
                     Estado = c.Estado,
-                    TotalCotizaciones = c.Cotizaciones.Count(cot => cot.Estado == true)
+                    TotalCotizaciones = c.Cotizaciones.Count(cot => cot.Estado == true),
+                    EsPortalActivo = c.EsPortalActivo,
+                    UserNamePortal = c.UserNamePortal,
+                    TieneCuentaPortal = c.EsPortalActivo && c.UserNamePortal != null && c.UserNamePortal != ""
                 })
                 .FirstOrDefaultAsync();
 

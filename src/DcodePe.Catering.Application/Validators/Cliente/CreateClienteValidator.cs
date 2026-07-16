@@ -13,15 +13,13 @@ namespace DcodePe.Catering.Application.Validators.Cliente
             _databaseService = databaseService;
 
             RuleFor(x => x.TipoDocumento)
-                .NotEmpty().WithMessage("El tipo de documento es obligatorio")
                 .MaximumLength(50).WithMessage("El tipo de documento no puede exceder 50 caracteres")
-                .Must(BeValidTipoDocumento).WithMessage("Tipo de documento no válido. Use: DNI, RUC, Pasaporte, Carnet de Extranjería");
+                .Must(BeValidTipoDocumento).WithMessage("Tipo de documento no vÃ¡lido. Use: DNI, RUC, Pasaporte, Carnet de ExtranjerÃ­a");
 
             RuleFor(x => x.NumeroDocumento)
-                .NotEmpty().WithMessage("El número de documento es obligatorio")
-                .MaximumLength(20).WithMessage("El número de documento no puede exceder 20 caracteres")
+                .MaximumLength(20).WithMessage("El nÃºmero de documento no puede exceder 20 caracteres")
                 .MustAsync(async (numeroDocumento, cancellation) => await BeUniqueNumeroDocumento(0, numeroDocumento))
-                .WithMessage("Ya existe un cliente con ese número de documento");
+                .WithMessage("Ya existe un cliente con ese nÃºmero de documento");
 
             RuleFor(x => x.NombreCompleto)
                 .NotEmpty().WithMessage("El nombre completo es obligatorio")
@@ -29,35 +27,35 @@ namespace DcodePe.Catering.Application.Validators.Cliente
 
             RuleFor(x => x.Email)
                 .NotEmpty().WithMessage("El email es obligatorio")
-                .EmailAddress().WithMessage("El email no tiene un formato válido")
+                .EmailAddress().WithMessage("El email no tiene un formato vÃ¡lido")
                 .MaximumLength(100).WithMessage("El email no puede exceder 100 caracteres");
 
             RuleFor(x => x.Telefono)
-                .NotEmpty().WithMessage("El teléfono es obligatorio")
-                .MaximumLength(20).WithMessage("El teléfono no puede exceder 20 caracteres");
+                .NotEmpty().WithMessage("El telÃ©fono es obligatorio")
+                .MaximumLength(20).WithMessage("El telÃ©fono no puede exceder 20 caracteres");
 
             RuleFor(x => x.TelefonoSecundario)
-                .MaximumLength(20).WithMessage("El teléfono secundario no puede exceder 20 caracteres");
+                .MaximumLength(20).WithMessage("El telÃ©fono secundario no puede exceder 20 caracteres");
 
             RuleFor(x => x.Direccion)
-                .MaximumLength(500).WithMessage("La dirección no puede exceder 500 caracteres");
+                .MaximumLength(500).WithMessage("La direcciÃ³n no puede exceder 500 caracteres");
 
             RuleFor(x => x.Ciudad)
                 .MaximumLength(100).WithMessage("La ciudad no puede exceder 100 caracteres");
 
             RuleFor(x => x.Pais)
-                .MaximumLength(100).WithMessage("El país no puede exceder 100 caracteres");
+                .MaximumLength(100).WithMessage("El paÃ­s no puede exceder 100 caracteres");
 
             RuleFor(x => x.TipoCliente)
                 .MaximumLength(50).WithMessage("El tipo de cliente no puede exceder 50 caracteres")
-                .Must(BeValidTipoCliente).WithMessage("Tipo de cliente no válido. Use: Particular, Empresa, Gobierno");
+                .Must(BeValidTipoCliente).WithMessage("Tipo de cliente no vÃ¡lido. Use: Particular, Empresa, Gobierno");
 
             RuleFor(x => x.Observaciones)
                 .MaximumLength(1000).WithMessage("Las observaciones no pueden exceder 1000 caracteres");
 
             RuleFor(x => x.UsuarioCreacion)
-                .NotEmpty().WithMessage("El usuario de creación es obligatorio")
-                .MaximumLength(100).WithMessage("El usuario de creación no puede exceder 100 caracteres");
+                .NotEmpty().WithMessage("El usuario de creaciÃ³n es obligatorio")
+                .MaximumLength(100).WithMessage("El usuario de creaciÃ³n no puede exceder 100 caracteres");
         }
 
         private bool BeValidTipoDocumento(string tipoDocumento)
@@ -65,7 +63,7 @@ namespace DcodePe.Catering.Application.Validators.Cliente
             if (string.IsNullOrWhiteSpace(tipoDocumento))
                 return true;
 
-            var tiposValidos = new[] { "DNI", "RUC", "Pasaporte", "Carnet de Extranjería", "CE" };
+            var tiposValidos = new[] { "DNI", "RUC", "Pasaporte", "Carnet de ExtranjerÃ­a", "CE" };
             return tiposValidos.Contains(tipoDocumento, StringComparer.OrdinalIgnoreCase);
         }
 

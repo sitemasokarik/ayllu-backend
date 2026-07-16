@@ -18,6 +18,9 @@ public partial class LocalEntity
 
     public decimal PrecioAlquiler { get; set; }
 
+    /// <summary>Garantía del local (monto fijo por evento).</summary>
+    public decimal Garantia { get; set; }
+
     public decimal HorasEvento { get; set; }
 
     public string Fotos { get; set; }

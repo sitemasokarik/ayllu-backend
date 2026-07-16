@@ -1,4 +1,4 @@
-﻿using DcodePe.Catering.Domain.Entities;
+using DcodePe.Catering.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -21,11 +21,29 @@ namespace DcodePe.Catering.Persistence.Configuration
                 .IsRequired()
                 .HasMaxLength(2000);
 
+            entityBuilder.Property(e => e.Resumen)
+                .HasMaxLength(1000);
+
+            entityBuilder.Property(e => e.MisionTitulo)
+                .HasMaxLength(200);
+
+            entityBuilder.Property(e => e.MisionTexto)
+                .HasMaxLength(2000);
+
+            entityBuilder.Property(e => e.VisionTitulo)
+                .HasMaxLength(200);
+
+            entityBuilder.Property(e => e.VisionTexto)
+                .HasMaxLength(2000);
+
             entityBuilder.Property(e => e.ValoresJson)
                 .HasColumnType("nvarchar(max)");
 
             entityBuilder.Property(e => e.Imagenes)
                 .HasMaxLength(2000);
+
+            entityBuilder.Property(e => e.LandingConfigJson)
+                .HasColumnType("nvarchar(max)");
 
             entityBuilder.Property(e => e.Estado)
                 .HasDefaultValue(true);

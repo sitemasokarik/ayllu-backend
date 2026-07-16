@@ -1,3 +1,4 @@
+using DcodePe.Catering.Application.DataBase.Blog;
 using DcodePe.Catering.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -26,6 +27,11 @@ namespace DcodePe.Catering.Application.DataBase.Blog.Commands.Update
 
             entity.Titulo = model.Titulo;
             entity.Descripcion = model.Descripcion;
+            entity.Resumen = model.Resumen;
+            entity.MisionTitulo = model.MisionTitulo;
+            entity.MisionTexto = model.MisionTexto;
+            entity.VisionTitulo = model.VisionTitulo;
+            entity.VisionTexto = model.VisionTexto;
             entity.ValoresJson = model.Valores != null && model.Valores.Any()
                 ? JsonSerializer.Serialize(model.Valores.Select(v => new ValorEmpresarial
                 {
@@ -35,7 +41,8 @@ namespace DcodePe.Catering.Application.DataBase.Blog.Commands.Update
                 : null;
             entity.Imagenes = model.ImagenesUrls != null && model.ImagenesUrls.Any()
                 ? string.Join(";", model.ImagenesUrls)
-                : model.Imagenes;
+                : string.Empty;
+                entity.LandingConfigJson = LandingConfigMapper.Serialize(model.LandingConfig) ?? "{}";
             entity.UsuarioModificacion = model.UsuarioModificacion ?? "SYSTEM";
             entity.FechaModificacion = DateTime.Now;
 

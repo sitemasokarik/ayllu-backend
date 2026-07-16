@@ -1,5 +1,8 @@
-﻿using DcodePe.Catering.Domain.Entities;
+using DcodePe.Catering.Domain.Entities;
 using DcodePe.Catering.Domain.Entities.Clientes;
+using DcodePe.Catering.Domain.Entities.Facturacion;
+using DcodePe.Catering.Domain.Entities.Pagos;
+using DcodePe.Catering.Domain.Entities.Tickets;
 
 namespace DcodePe.Catering.Application.Database
 {
@@ -28,6 +31,14 @@ namespace DcodePe.Catering.Application.Database
         DbSet<RolEntity> Rol { get; set; }
         DbSet<PaginaEntity> Pagina { get; set; }
         DbSet<PermisoEntity> Permiso { get; set; }
+        DbSet<ComprobanteElectronicoEntity> ComprobanteElectronico { get; set; }
+        DbSet<ComprobanteDetalleEntity> ComprobanteDetalle { get; set; }
+        DbSet<ComprobanteSerieEntity> ComprobanteSerie { get; set; }
+        DbSet<TicketInternoEntity> TicketInterno { get; set; }
+        DbSet<TicketMensajeEntity> TicketMensaje { get; set; }
+        DbSet<TicketVistoEntity> TicketVisto { get; set; }
+        DbSet<PagoVoucherEntity> PagoVoucher { get; set; }
+        DbSet<PagoMercadoPagoEntity> PagoMercadoPago { get; set; }
 
         Task<bool> SaveAsync();
     }

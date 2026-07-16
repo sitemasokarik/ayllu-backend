@@ -29,6 +29,10 @@ namespace DcodePe.Catering.Persistence.Configuration
             entityBuilder.Property(e => e.PrecioAlquiler)
                 .HasColumnType("decimal(10, 2)")
                 .IsRequired();
+
+            entityBuilder.Property(e => e.Garantia)
+                .HasColumnType("decimal(10, 2)")
+                .HasDefaultValue(0m);
             
             entityBuilder.Property(e => e.HorasEvento)
                 .HasColumnType("decimal(5, 2)")

@@ -9,6 +9,12 @@
 
             services.AddSingleton<IMailerSendEmailService, MailerSendEmailService>();
             services.AddSingleton<IGetTokenJwtService, GetTokenJwtService>();
+            services.AddScoped<SunatEmpresaConfigProvider>();
+            services.AddScoped<SunatUblInvoiceBuilder>();
+            services.AddScoped<SunatXmlSigner>();
+            services.AddScoped<SunatBillServiceClient>();
+            services.AddScoped<SunatCdrParser>();
+            services.AddScoped<ISunatEmisionService, SunatEmisionService>();
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(option =>
             {

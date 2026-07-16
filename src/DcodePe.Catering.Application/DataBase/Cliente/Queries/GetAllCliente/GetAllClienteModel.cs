@@ -22,5 +22,8 @@ namespace DcodePe.Catering.Application.DataBase.Cliente.Queries.GetAllCliente
         public DateTime? FechaModificacion { get; set; }
         public bool? Estado { get; set; }
         public int TotalCotizaciones { get; set; }
+        public bool EsPortalActivo { get; set; }
+        public string? UserNamePortal { get; set; }
+        public bool TieneCuentaPortal { get; set; }
     }
 }

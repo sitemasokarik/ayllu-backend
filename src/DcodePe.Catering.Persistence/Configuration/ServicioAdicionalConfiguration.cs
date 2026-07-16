@@ -21,6 +21,7 @@ namespace DcodePe.Catering.Persistence.Configuration
                 .IsRequired()
                 .HasMaxLength(100);
             entity.Property(e => e.Precio).HasColumnType("decimal(10, 2)");
+            entity.Property(e => e.CantidadMinima).HasDefaultValue(1);
             entity.Property(e => e.Fotos)
              .HasMaxLength(500);
             entity.Property(e => e.UsuarioCreacion).HasMaxLength(100);

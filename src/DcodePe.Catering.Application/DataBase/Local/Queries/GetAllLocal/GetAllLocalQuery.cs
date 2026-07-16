@@ -17,6 +17,7 @@ namespace DcodePe.Catering.Application.DataBase.Local.Queries.GetAllLocal
                     Direccion = local.Direccion,
                     Capacidad = local.Capacidad,
                     PrecioAlquiler = local.PrecioAlquiler,
+                    Garantia = local.Garantia,
                     HorasEvento = local.HorasEvento,
                     //Fotos = local.Fotos,
                     FotosUrls = string.IsNullOrEmpty(local.Fotos)
@@ -46,6 +47,7 @@ namespace DcodePe.Catering.Application.DataBase.Local.Queries.GetAllLocal
                     Direccion = local.Direccion,
                     Capacidad = local.Capacidad,
                     PrecioAlquiler = local.PrecioAlquiler,
+                    Garantia = local.Garantia,
                     HorasEvento = local.HorasEvento,
                     //Fotos = local.Fotos,
                     FotosUrls = string.IsNullOrEmpty(local.Fotos)

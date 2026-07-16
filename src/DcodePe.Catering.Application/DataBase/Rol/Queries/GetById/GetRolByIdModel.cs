@@ -18,6 +18,8 @@ namespace DcodePe.Catering.Application.DataBase.Rol.Queries.GetById
         public string PaginaNombre { get; set; }
         public string Url { get; set; }
         public string Icono { get; set; }
+        public string? GrupoMenu { get; set; }
+        public int? OrdenMenu { get; set; }
         public bool PuedeVer { get; set; }
         public bool PuedeCrear { get; set; }
         public bool PuedeEditar { get; set; }

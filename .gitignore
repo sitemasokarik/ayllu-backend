@@ -15,6 +15,15 @@
 
 # Launch settings with secrets
 **/Properties/launchSettings.json
+**/appsettings.Monster.json
+
+# SQLite dev database
+**/Data/ayllu-dev.db
+**/Data/ayllu-dev.db-*
+**/Data/uploads/
+**/fe/certificado/
+**/fe/xml/
+**/fe/cdr/
 
 # Mono auto generated files
 mono_crash.*

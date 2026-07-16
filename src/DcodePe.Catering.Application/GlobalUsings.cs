@@ -7,6 +7,7 @@ global using DcodePe.Catering.Application.DataBase.Bookings.Commants.UpdateBooki
 global using DcodePe.Catering.Application.DataBase.Bookings.Queries.GetAllBooking;
 global using DcodePe.Catering.Application.DataBase.Bookings.Queries.GetBookingsByDocumentNumber;
 global using DcodePe.Catering.Application.DataBase.Bookings.Queries.GetBookingsByType;
+global using DcodePe.Catering.Application.DataBase.Cotizacion.Commands.Claim;
 global using DcodePe.Catering.Application.DataBase.Cotizacion.Commands.Create;
 global using DcodePe.Catering.Application.DataBase.Cotizacion.Queries.GetAllCotizacion;
 global using DcodePe.Catering.Application.DataBase.Customer.Commants.CreateCustomer;

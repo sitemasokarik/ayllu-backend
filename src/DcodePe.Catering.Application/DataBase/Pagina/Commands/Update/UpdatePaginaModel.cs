@@ -7,6 +7,8 @@ namespace DcodePe.Catering.Application.DataBase.Pagina.Commands.Update
         public string Descripcion { get; set; }
         public string Url { get; set; }
         public string Icono { get; set; }
+        public string? GrupoMenu { get; set; }
+        public int? OrdenMenu { get; set; }
         public string UsuarioModificacion { get; set; }
     }
 }

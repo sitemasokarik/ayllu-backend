@@ -1,4 +1,4 @@
-﻿using Microsoft.OpenApi.Models;
+using Microsoft.OpenApi.Models;
 using System.Reflection;
 
 namespace DcodePe.Catering.Api
@@ -7,6 +7,9 @@ namespace DcodePe.Catering.Api
     {
            public static IServiceCollection AddWebApi(this IServiceCollection services) 
             {
+            services.AddScoped<DcodePe.Catering.Api.Helpers.IFileStorageService, DcodePe.Catering.Api.Helpers.FileStorageService>();
+            services.AddDataProtection();
+            services.AddScoped<DcodePe.Catering.Application.Security.ISecretProtectionService, DcodePe.Catering.Api.Helpers.DataProtectionSecretService>();
             services.AddSwaggerGen(options =>
             {
                 options.SwaggerDoc("v1", new OpenApiInfo

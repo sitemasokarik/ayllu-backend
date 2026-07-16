@@ -1,4 +1,4 @@
-﻿#nullable disable
+#nullable disable
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -15,9 +15,21 @@ namespace DcodePe.Catering.Domain.Entities
 
         public string Descripcion { get; set; }
 
+        public string Resumen { get; set; }
+
+        public string MisionTitulo { get; set; }
+
+        public string MisionTexto { get; set; }
+
+        public string VisionTitulo { get; set; }
+
+        public string VisionTexto { get; set; }
+
         public string ValoresJson { get; set; }
 
         public string Imagenes { get; set; }
+
+        public string LandingConfigJson { get; set; }
 
         public string UsuarioCreacion { get; set; }
 

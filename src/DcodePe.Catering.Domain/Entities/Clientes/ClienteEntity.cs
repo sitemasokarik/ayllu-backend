@@ -8,42 +8,42 @@ namespace DcodePe.Catering.Domain.Entities.Clientes
     public partial class ClienteEntity : BaseEntity
     {
         /// <summary>
-        /// Identificador único del cliente
+        /// Identificador Ãºnico del cliente
         /// </summary>
         public int ClienteID { get; set; }
 
         /// <summary>
-        /// Tipo de documento (DNI, RUC, Pasaporte, Carnet de Extranjería)
+        /// Tipo de documento (DNI, RUC, Pasaporte, Carnet de ExtranjerÃ­a)
         /// </summary>
         public string TipoDocumento { get; set; }
 
         /// <summary>
-        /// Número de documento de identidad
+        /// NÃºmero de documento de identidad
         /// </summary>
         public string NumeroDocumento { get; set; }
 
         /// <summary>
-        /// Nombre completo o razón social del cliente
+        /// Nombre completo o razÃ³n social del cliente
         /// </summary>
         public string NombreCompleto { get; set; }
 
         /// <summary>
-        /// Correo electrónico del cliente
+        /// Correo electrÃ³nico del cliente
         /// </summary>
         public string? Email { get; set; }
 
         /// <summary>
-        /// Número de teléfono principal
+        /// NÃºmero de telÃ©fono principal
         /// </summary>
         public string? Telefono { get; set; }
 
         /// <summary>
-        /// Número de teléfono secundario o celular
+        /// NÃºmero de telÃ©fono secundario o celular
         /// </summary>
         public string? TelefonoSecundario { get; set; }
 
         /// <summary>
-        /// Dirección completa del cliente
+        /// DirecciÃ³n completa del cliente
         /// </summary>
         public string? Direccion { get; set; }
 
@@ -53,7 +53,7 @@ namespace DcodePe.Catering.Domain.Entities.Clientes
         public string? Ciudad { get; set; }
 
         /// <summary>
-        /// País del cliente
+        /// PaÃ­s del cliente
         /// </summary>
         public string? Pais { get; set; }
 
@@ -68,16 +68,31 @@ namespace DcodePe.Catering.Domain.Entities.Clientes
         public string? Observaciones { get; set; }
 
         /// <summary>
-        /// Indica si el cliente está en lista VIP
+        /// Indica si el cliente estÃ¡ en lista VIP
         /// </summary>
         public bool EsVIP { get; set; }
 
         /// <summary>
-        /// Fecha de nacimiento o fecha de constitución (para empresas)
+        /// Fecha de nacimiento o fecha de constituciÃ³n (para empresas)
         /// </summary>
         public DateTime? FechaNacimiento { get; set; }
 
-        // Navegación a Cotizaciones
+        /// <summary>
+        /// Usuario de acceso al portal del cliente (landing)
+        /// </summary>
+        public string? UserNamePortal { get; set; }
+
+        /// <summary>
+        /// Hash BCrypt para login del portal
+        /// </summary>
+        public string? PasswordHash { get; set; }
+
+        /// <summary>
+        /// Indica si el cliente tiene acceso al portal web
+        /// </summary>
+        public bool EsPortalActivo { get; set; }
+
+        // NavegaciÃ³n a Cotizaciones
         /// <summary>
         /// Cotizaciones realizadas por el cliente
         /// </summary>

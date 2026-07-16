@@ -2,6 +2,6 @@
 {
     public interface IGetTokenJwtService
     {
-        string Execute(string id);
+        string Execute(string id, string userType = "admin");
     }
 }

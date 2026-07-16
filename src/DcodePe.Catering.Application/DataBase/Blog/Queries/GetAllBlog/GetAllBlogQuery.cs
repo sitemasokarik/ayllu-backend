@@ -1,3 +1,4 @@
+using DcodePe.Catering.Application.DataBase.Blog;
 using DcodePe.Catering.Application.DataBase.Blog.Models;
 
 namespace DcodePe.Catering.Application.DataBase.Blog.Queries.GetAllBlog
@@ -17,25 +18,7 @@ namespace DcodePe.Catering.Application.DataBase.Blog.Queries.GetAllBlog
                 .Where(b => b.Estado == true)
                 .ToListAsync();
 
-            return blogs.Select(blog => new GetAllBlogModel
-            {
-                BlogID = blog.BlogID,
-                Titulo = blog.Titulo,
-                Descripcion = blog.Descripcion,
-                 ImagenesUrls= blog.ImagenesUrls?.ToList() ?? new List<string>(),
-                Valores = blog.Valores?.Select(v => new ValorModel
-                {
-                    Nombre = v.Nombre,
-                    Descripcion = v.Descripcion
-                }).ToList() ?? new List<ValorModel>(),
-                UsuarioCreacion = blog.UsuarioCreacion,
-                FechaCreacion = blog.FechaCreacion,
-                UsuarioModificacion = blog.UsuarioModificacion,
-                FechaModificacion = blog.FechaModificacion,
-                UsuarioEliminacion = blog.UsuarioEliminacion,
-                FechaEliminacion = blog.FechaEliminacion,
-                Estado = blog.Estado
-            }).ToList();
+            return blogs.Select(MapBlog).ToList();
         }
 
         public async Task<GetAllBlogModel> ExecuteGetBlogById(int blogId)
@@ -47,12 +30,23 @@ namespace DcodePe.Catering.Application.DataBase.Blog.Queries.GetAllBlog
             if (blog == null)
                 return null;
 
+            return MapBlog(blog);
+        }
+
+        private static GetAllBlogModel MapBlog(Domain.Entities.BlogEntity blog)
+        {
             return new GetAllBlogModel
             {
                 BlogID = blog.BlogID,
                 Titulo = blog.Titulo,
                 Descripcion = blog.Descripcion,
+                Resumen = blog.Resumen,
+                MisionTitulo = blog.MisionTitulo,
+                MisionTexto = blog.MisionTexto,
+                VisionTitulo = blog.VisionTitulo,
+                VisionTexto = blog.VisionTexto,
                 ImagenesUrls = blog.ImagenesUrls?.ToList() ?? new List<string>(),
+                LandingConfig = LandingConfigMapper.FromEntity(blog),
                 Valores = blog.Valores?.Select(v => new ValorModel
                 {
                     Nombre = v.Nombre,

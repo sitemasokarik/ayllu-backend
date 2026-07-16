@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 namespace DcodePe.Catering.Persistence.Configuration
 {
     /// <summary>
-    /// Configuración de Entity Framework para la entidad Cliente
+    /// ConfiguraciÃ³n de Entity Framework para la entidad Cliente
     /// </summary>
     public class ClienteConfiguration : IEntityTypeConfiguration<ClienteEntity>
     {
@@ -22,35 +22,35 @@ namespace DcodePe.Catering.Persistence.Configuration
             entityBuilder.Property(e => e.TipoDocumento)
                 .IsRequired()
                 .HasMaxLength(50)
-                .HasComment("Tipo de documento: DNI, RUC, Pasaporte, Carnet de Extranjería");
+                .HasComment("Tipo de documento: DNI, RUC, Pasaporte, Carnet de ExtranjerÃ­a");
 
             entityBuilder.Property(e => e.NumeroDocumento)
                 .IsRequired()
                 .HasMaxLength(20)
-                .HasComment("Número de documento de identidad");
+                .HasComment("NÃºmero de documento de identidad");
 
             entityBuilder.Property(e => e.NombreCompleto)
                 .IsRequired()
                 .HasMaxLength(200)
-                .HasComment("Nombre completo o razón social del cliente");
+                .HasComment("Nombre completo o razÃ³n social del cliente");
 
             entityBuilder.Property(e => e.Email)
                 .IsRequired()
                 .HasMaxLength(100)
-                .HasComment("Correo electrónico del cliente");
+                .HasComment("Correo electrÃ³nico del cliente");
 
             entityBuilder.Property(e => e.Telefono)
                 .IsRequired()
                 .HasMaxLength(20)
-                .HasComment("Número de teléfono principal");
+                .HasComment("NÃºmero de telÃ©fono principal");
 
             entityBuilder.Property(e => e.TelefonoSecundario)
                 .HasMaxLength(20)
-                .HasComment("Número de teléfono secundario o celular");
+                .HasComment("NÃºmero de telÃ©fono secundario o celular");
 
             entityBuilder.Property(e => e.Direccion)
                 .HasMaxLength(500)
-                .HasComment("Dirección completa del cliente");
+                .HasComment("DirecciÃ³n completa del cliente");
 
             entityBuilder.Property(e => e.Ciudad)
                 .HasMaxLength(100)
@@ -58,8 +58,8 @@ namespace DcodePe.Catering.Persistence.Configuration
 
             entityBuilder.Property(e => e.Pais)
                 .HasMaxLength(100)
-                .HasDefaultValue("Perú")
-                .HasComment("País del cliente");
+                .HasDefaultValue("PerÃº")
+                .HasComment("PaÃ­s del cliente");
 
             entityBuilder.Property(e => e.TipoCliente)
                 .HasMaxLength(50)
@@ -76,7 +76,21 @@ namespace DcodePe.Catering.Persistence.Configuration
 
             entityBuilder.Property(e => e.FechaNacimiento)
                 .HasColumnType("date")
-                .HasComment("Fecha de nacimiento o constitución");
+                .HasComment("Fecha de nacimiento o constituciÃ³n");
+
+            entityBuilder.Property(e => e.UserNamePortal)
+                .HasMaxLength(100);
+
+            entityBuilder.Property(e => e.PasswordHash)
+                .HasMaxLength(255);
+
+            entityBuilder.Property(e => e.EsPortalActivo)
+                .HasDefaultValue(false);
+
+            entityBuilder.HasIndex(e => e.UserNamePortal)
+                .IsUnique()
+                .HasFilter("[UserNamePortal] IS NOT NULL")
+                .HasDatabaseName("UQ_Cliente_UserNamePortal");
 
             // Audit Fields (heredados de BaseEntity)
             entityBuilder.Property(e => e.Estado)

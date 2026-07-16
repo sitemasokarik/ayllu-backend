@@ -32,6 +32,7 @@ namespace DcodePe.Catering.Application.DataBase.Cotizacion.Queries.GetAllCotizac
                     EventoDescripcion = cotizacion.Evento != null ? cotizacion.Evento.Descripcion : null,
                     FechaTentativa = cotizacion.FechaTentativa,
                     FechaTentativaOpcional = cotizacion.FechaTentativaOpcional,
+                    FechaReservada = cotizacion.FechaReservada,
                     FechaContacto = cotizacion.FechaContacto,
                     HoraContacto = cotizacion.HoraContacto,
                     NumeroInvitados = cotizacion.NumeroInvitados,
@@ -45,6 +46,13 @@ namespace DcodePe.Catering.Application.DataBase.Cotizacion.Queries.GetAllCotizac
                     TotalCotizacion = cotizacion.TotalCotizacion,
                     Observacion = cotizacion.Observacion,
                     EstadoCotizacion = cotizacion.EstadoCotizacion,
+                    OrigenCotizacion = cotizacion.OrigenCotizacion,
+                    BorradorJson = cotizacion.BorradorJson,
+                    CreadoPorUsuarioID = cotizacion.CreadoPorUsuarioID,
+                    CreadoPorNombre = cotizacion.CreadoPorNombre,
+                    ResponsableUsuarioID = cotizacion.ResponsableUsuarioID,
+                    ResponsableNombre = cotizacion.ResponsableNombre,
+                    FechaAsignacion = cotizacion.FechaAsignacion,
                     UsuarioCreacion = cotizacion.UsuarioCreacion,
                     FechaCreacion = cotizacion.FechaCreacion,
                     UsuarioModificacion = cotizacion.UsuarioModificacion,
@@ -115,6 +123,30 @@ namespace DcodePe.Catering.Application.DataBase.Cotizacion.Queries.GetAllCotizac
                     }).ToList(),
                 }).ToListAsync();
 
+            var cotizacionIds = result.Select(r => r.CotizacionID).ToList();
+            if (cotizacionIds.Count > 0)
+            {
+                var comprobantes = await _databaseService.ComprobanteElectronico
+                    .AsNoTracking()
+                    .Where(c => c.CotizacionID.HasValue && cotizacionIds.Contains(c.CotizacionID.Value) && c.Estado == true)
+                    .OrderByDescending(c => c.FechaCreacion)
+                    .ToListAsync();
+
+                var map = comprobantes
+                    .Where(c => c.CotizacionID.HasValue)
+                    .GroupBy(c => c.CotizacionID!.Value)
+                    .ToDictionary(g => g.Key, g => g.First());
+
+                foreach (var item in result)
+                {
+                    if (map.TryGetValue(item.CotizacionID, out var comp))
+                    {
+                        item.ComprobanteID = comp.ComprobanteID;
+                        item.ComprobanteNumero = comp.NumeroCompleto;
+                    }
+                }
+            }
+
             return result;
         }
 
@@ -145,6 +177,7 @@ namespace DcodePe.Catering.Application.DataBase.Cotizacion.Queries.GetAllCotizac
                     EventoDescripcion = cotizacion.Evento != null ? cotizacion.Evento.Descripcion : null,
                     FechaTentativa = cotizacion.FechaTentativa,
                     FechaTentativaOpcional = cotizacion.FechaTentativaOpcional,
+                    FechaReservada = cotizacion.FechaReservada,
                     FechaContacto = cotizacion.FechaContacto,
                     HoraContacto = cotizacion.HoraContacto,
                     NumeroInvitados = cotizacion.NumeroInvitados,
@@ -158,6 +191,13 @@ namespace DcodePe.Catering.Application.DataBase.Cotizacion.Queries.GetAllCotizac
                     TotalCotizacion = cotizacion.TotalCotizacion,
                     Observacion = cotizacion.Observacion,
                     EstadoCotizacion = cotizacion.EstadoCotizacion,
+                    OrigenCotizacion = cotizacion.OrigenCotizacion,
+                    BorradorJson = cotizacion.BorradorJson,
+                    CreadoPorUsuarioID = cotizacion.CreadoPorUsuarioID,
+                    CreadoPorNombre = cotizacion.CreadoPorNombre,
+                    ResponsableUsuarioID = cotizacion.ResponsableUsuarioID,
+                    ResponsableNombre = cotizacion.ResponsableNombre,
+                    FechaAsignacion = cotizacion.FechaAsignacion,
                     UsuarioCreacion = cotizacion.UsuarioCreacion,
                     FechaCreacion = cotizacion.FechaCreacion,
                     UsuarioModificacion = cotizacion.UsuarioModificacion,

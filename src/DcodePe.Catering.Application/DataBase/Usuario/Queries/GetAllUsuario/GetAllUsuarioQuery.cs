@@ -1,4 +1,4 @@
-﻿using DcodePe.Catering.Application.DataBase.Local.Queries.GetAllLocal;
+using DcodePe.Catering.Application.DataBase.Local.Queries.GetAllLocal;
 
 namespace DcodePe.Catering.Application.DataBase.Usuario.Queries.GetAllUsuario
 {
@@ -13,6 +13,7 @@ namespace DcodePe.Catering.Application.DataBase.Usuario.Queries.GetAllUsuario
                     UsuarioID = Usuario.UsuarioID,
                     Nombre = Usuario.Nombre,
                     Email = Usuario.Email,
+                    UserName = Usuario.UserName,
                     Password = Usuario.Password,
                     RolID = Usuario.RolID,
                     UsuarioCreacion = Usuario.UsuarioCreacion,
